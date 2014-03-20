@@ -25,20 +25,20 @@ do ($ = jQuery, window, document) ->
 
     _onUserInteraction: ->
       @_$body.stop()
-      @_animationEnd()
+      @_animationEnd false
 
       return
 
     _setup: ->
       @_$body.on userInteraction, @_onUserInteraction
       return
-    _animationEnd: ->
+    _animationEnd: (completed) ->
       return unless @_animating
       @_animating = false
 
       @_$body.unbind userInteraction, @_onUserInteraction
 
-      @_options.callback?()
+      @_options.callback?(completed)
 
       return
 
@@ -47,7 +47,7 @@ do ($ = jQuery, window, document) ->
       @_animating = true
       offsetY = @_options.offsetY
       if window.scrollY > offsetY
-        @_$body.animate {scrollTop:offsetY}, @_options.duration, @_options.easing, => @_animationEnd()
+        @_$body.animate {scrollTop:offsetY}, @_options.duration, @_options.easing, => @_animationEnd true; return;
 
       return
 
