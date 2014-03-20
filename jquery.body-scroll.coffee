@@ -8,29 +8,35 @@ do ($ = jQuery, window, document) ->
     callback: null
     offsetY: 0
 
-  # The actual plugin constructor
+  userInteraction = "scroll mousedown DOMMouseScroll mousewheel keyup"
+
+
   class BodyScroll
     constructor: (options) ->
       @_options = $.extend {}, defaults, options
       @_$body = $("html, body");
 
       @_animating = false
+      @_onUserInteraction = $.proxy @_onUserInteraction, this
 
       @_setup()
 
       @_animate()
 
+    _onUserInteraction: ->
+      @_$body.stop()
+      @_animationEnd()
+
+      return
+
     _setup: ->
-      @_$body.on "scroll mousedown DOMMouseScroll mousewheel keyup", =>
-        @_$body.stop()
-        @_animationEnd()
-        return
+      @_$body.on userInteraction, @_onUserInteraction
       return
     _animationEnd: ->
       return unless @_animating
       @_animating = false
 
-      @_$body.off "scroll mousedown DOMMouseScroll mousewheel keyup"
+      @_$body.unbind userInteraction, @_onUserInteraction
 
       @_options.callback?()
 
