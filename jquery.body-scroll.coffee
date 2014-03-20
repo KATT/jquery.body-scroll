@@ -1,63 +1,62 @@
 # Scroll body to position, but halt when user scrolls
-do ($ = jQuery, window, document) ->
 
-  defaults =
-    duration: 800,
-    easing: 'swing'
-    callback: null
-    offsetY: 0
+defaults =
+  duration: 800,
+  easing: 'swing'
+  callback: null
+  offsetY: 0
 
-  userInteraction = "scroll mousedown DOMMouseScroll mousewheel keyup"
-
-
-  class BodyScroll
-    constructor: (options) ->
-      @_options = $.extend {}, defaults, options
-      @_$body = $("html, body");
-
-      @_animating = false
-      @_onUserInteraction = $.proxy @_onUserInteraction, this
-
-      @_setup()
-
-      @_animate()
-
-    _onUserInteraction: ->
-      @_$body.stop()
-      @_animationEnd false
-
-      return
-
-    _setup: ->
-      @_$body.on userInteraction, @_onUserInteraction
-      return
-    _animationEnd: (completed) ->
-      return unless @_animating
-      @_animating = false
-
-      @_$body.unbind userInteraction, @_onUserInteraction
-
-      @_options.callback?(completed)
-
-      return
+userInteraction = "scroll mousedown DOMMouseScroll mousewheel keyup"
 
 
-    _animate: ->
-      @_animating = true
-      offsetY = @_options.offsetY
-      if window.scrollY > offsetY
-        @_$body.animate(
-          { scrollTop: offsetY }
-          , @_options.duration
-          , @_options.easing
-          , =>
-            @_animationEnd true
-            return
-        )
+class BodyScroll
+  constructor: (options) ->
+    @_options = $.extend {}, defaults, options
+    @_$body = $("html, body");
 
-      return
+    @_animating = false
+    @_onUserInteraction = $.proxy @_onUserInteraction, this
 
-  $.bodyScroll = (options) ->
-    new BodyScroll options
+    @_setup()
+
+    @_animate()
+
+  _onUserInteraction: ->
+    @_$body.stop()
+    @_animationEnd false
+
+    return
+
+  _setup: ->
+    @_$body.on userInteraction, @_onUserInteraction
+    return
+  _animationEnd: (completed) ->
+    return unless @_animating
+    @_animating = false
+
+    @_$body.unbind userInteraction, @_onUserInteraction
+
+    @_options.callback?(completed)
+
+    return
+
+
+  _animate: ->
+    @_animating = true
+    offsetY = @_options.offsetY
+    if window.scrollY > offsetY
+      @_$body.animate(
+        { scrollTop: offsetY }
+        , @_options.duration
+        , @_options.easing
+        , =>
+          @_animationEnd true
+          return
+      )
+
+    return
+
+$.bodyScroll = (options) ->
+  new BodyScroll options
 
 
