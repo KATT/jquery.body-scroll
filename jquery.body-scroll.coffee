@@ -1,7 +1,6 @@
 # Scroll body to position, but halt when user scrolls
 do ($ = jQuery, window, document) ->
 
-  pluginName = "bodyScroll"
   defaults =
     duration: 800,
     easing: 'swing'
@@ -47,7 +46,14 @@ do ($ = jQuery, window, document) ->
       @_animating = true
       offsetY = @_options.offsetY
       if window.scrollY > offsetY
-        @_$body.animate {scrollTop:offsetY}, @_options.duration, @_options.easing, => @_animationEnd true; return;
+        @_$body.animate(
+          { scrollTop: offsetY }
+          , @_options.duration
+          , @_options.easing
+          , =>
+            @_animationEnd true
+            return
+        )
 
       return
 
