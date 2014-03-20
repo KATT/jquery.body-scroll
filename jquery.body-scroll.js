@@ -36,7 +36,7 @@
         return;
       }
       this._animating = false;
-      this._$body.unbind(userInteraction, this._onUserInteraction);
+      this._$body.off(userInteraction, this._onUserInteraction);
       if (typeof (_base = this._options).callback === "function") {
         _base.callback(completed);
       }

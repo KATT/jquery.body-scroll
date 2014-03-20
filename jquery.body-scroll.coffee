@@ -34,7 +34,7 @@ class BodyScroll
     return unless @_animating
     @_animating = false
 
-    @_$body.unbind userInteraction, @_onUserInteraction
+    @_$body.off userInteraction, @_onUserInteraction
 
     @_options.callback?(completed)
 
