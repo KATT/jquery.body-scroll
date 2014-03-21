@@ -46,15 +46,13 @@
       var offsetY;
       this._animating = true;
       offsetY = this._options.offsetY;
-      if (window.scrollY > offsetY) {
-        this._$body.animate({
-          scrollTop: offsetY
-        }, this._options.duration, this._options.easing, (function(_this) {
-          return function() {
-            _this._animationEnd(true);
-          };
-        })(this));
-      }
+      this._$body.animate({
+        scrollTop: offsetY
+      }, this._options.duration, this._options.easing, (function(_this) {
+        return function() {
+          _this._animationEnd(true);
+        };
+      })(this));
     };
 
     return BodyScroll;
