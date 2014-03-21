@@ -43,11 +43,9 @@
     };
 
     BodyScroll.prototype._animate = function() {
-      var offsetY;
       this._animating = true;
-      offsetY = this._options.offsetY;
       this._$body.animate({
-        scrollTop: offsetY
+        scrollTop: this._options.offsetY
       }, this._options.duration, this._options.easing, (function(_this) {
         return function() {
           _this._animationEnd(true);

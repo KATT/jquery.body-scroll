@@ -43,9 +43,9 @@ class BodyScroll
 
   _animate: ->
     @_animating = true
-    offsetY = @_options.offsetY
+
     @_$body.animate(
-      { scrollTop: offsetY }
+      { scrollTop: @_options.offsetY }
       , @_options.duration
       , @_options.easing
       , =>
